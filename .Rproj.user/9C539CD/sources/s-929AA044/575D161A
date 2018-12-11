@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1544490879387.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2332786531",
+    "id" : "575D161A",
+    "lastKnownWriteTime" : 1544490921,
+    "last_content_update" : 1544490921998,
+    "path" : "~/TACooccurences/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+        "cursorPosition" : "0,12",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
