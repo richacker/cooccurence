@@ -1,16 +1,19 @@
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Co-occurences App"),
   
-  # Sidebar with a slider input for number of bins 
+  # Sidebar layout with input and output definitions ----
   sidebarLayout(
+    
+    # Sidebar panel for inputs ----
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      
+      # Input: Select a file ----
+      fileInput("file1", "Choose text File",
+                multiple = FALSE,
+                accept = c("text/plain", ".txt"))
+      
     ),
     
     # Show a plot of the generated distribution
