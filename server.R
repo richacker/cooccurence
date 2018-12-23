@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
        geom_node_text(aes(label = name), col = "darkgreen", size = 4) +
        theme_graph(base_family = "Arial Narrow") +  
        theme(legend.position = "none") +
-       labs(title = "Cooccurrences within 3 words distance", subtitle = c(input$checkbox))
+       labs(title = "Cooccurrences within 3 words distance", subtitle = "Graph")
      
    }
  })
