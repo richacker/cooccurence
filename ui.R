@@ -1,3 +1,7 @@
+#Rishi Gargi (Id: 11810003)
+#Vasanthi Kolachalama (Id: 11810072)
+#Vikesh Chopra (Id: 11810127)
+
 shinyUI(fluidPage(
   
   # Application title
