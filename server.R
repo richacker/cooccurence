@@ -12,19 +12,19 @@ shinyServer(function(input, output) {
      
      x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
      x <- as.data.frame(x)
-     chckVal <- input$checkbox
-     strsplit(chckVal, " ")
-     test <- subset(x, upos %in% strsplit(chckVal, " "))
-     print(test)
+     #chckVal <- input$checkbox
+     #strsplit(chckVal, " ")
+     #test <- subset(x, upos %in% strsplit(chckVal, " "))
+     #print(test)
      
-    print(chckVal)
-    print(c("NOUN", "ADJ"))
-    print(typeof(chckVal))
-    print(typeof(c("NOUN", "ADJ")))
-    print(gsub("  ", " ", chckVal))
+    #print(chckVal)
+    #print(c("NOUN", "ADJ"))
+    #print(typeof(chckVal))
+    #print(typeof(c("NOUN", "ADJ")))
+    #print(gsub("  ", " ", chckVal))
     
      nokia_cooc <- cooccurrence(     # try `?cooccurrence` for parm options
-       x = subset(x, upos %in% chckVal), 
+       x = subset(x, upos %in% c("NOUN", "ADJ")), 
        term = "lemma", 
        group = c("doc_id", "paragraph_id", "sentence_id"))  # 0.02 secs
      # str(nokia_cooc)
