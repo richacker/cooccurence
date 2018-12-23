@@ -57,13 +57,15 @@ shinyUI(fluidPage(
                   tabPanel("Co-occurence Graph", 
                            
                            # plot1 object returned by server.R
-                           plotOutput('plot')),
+                           plotOutput('plot'),
+                           textOutput("txt")),
+                          
                   
                   # third tab coming up:
                   tabPanel("Word Cloud",
                            
                            # obj 'clust_summary' from server.R
-                           tableOutput('clust_summary')),
+                           plotOutput('wcloud', width = "100%")),
                   
                   # fourth tab coming up:
                   tabPanel("Data",
