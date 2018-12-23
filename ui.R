@@ -45,7 +45,7 @@ shinyUI(fluidPage(
                            a(href="https://github.com/richacker/cooccurence/blob/master/review.txt"
                              ,"Sample data input file"),   
                            br(),
-                           a(href="https://github.com/richacker/cooccurence/blob/master/english-ud-2.0-170801.udpipe"
+                           a(href="https://github.com/bnosac/udpipe.models.ud/blob/master/models/english-ud-2.1-20180111.udpipe"
                              ,"Sample udpipe model file"),   
                            
                            br(),
