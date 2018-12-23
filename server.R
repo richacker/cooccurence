@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
      x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
      x <- as.data.frame(x)
      
-   all_words = x %>% subset(., upos %in% c(input$checkbox)); all_nouns$token[1:20]
+   all_words = x %>% subset(., upos %in% c(input$checkbox)); all_words$token[1:20]
    
    all_words = txt_freq(all_words$lemma)
    head(all_words$key, 20) 
@@ -63,4 +63,19 @@ shinyServer(function(input, output) {
             main="Title")
    }
  }, height = 800, width = 1200 )
+ 
+ output$datatable <- renderDataTable({
+   if(is.null(input$txtFile) || is.null(input$modelFile)){
+     return(NULL)
+   } else {
+     textData = readLines(file(input$txtFile$datapath), encoding = "UTF-8")
+     textData  =  str_replace_all(textData, "<.*?>", "") 
+     model = udpipe_load_model(input$modelFile$datapath)  
+     
+     x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
+     x <- as.data.frame(x)
+   out = data.frame(row_name = row.names(x),x)
+   out
+   }
+ })
 })

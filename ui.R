@@ -39,19 +39,22 @@ shinyUI(fluidPage(
                            
                            h4(p("Data input")),
                            
-                           p("This app supports only text file (.txt) data file.", align="justify"),
+                           p("This app supports only text file (.txt) data file and udpipe model file (.udpipe)", align="justify"),
                            
-                           p("Please refer to the link below for sample txt file."),
-                           a(href="https://github.com/sudhir-voleti/sample-data-sets/blob/master/Segmentation%20Discriminant%20and%20targeting%20data/ConneCtorPDASegmentation.csv"
+                           p("Please refer to the link below for sample txt file and english udpipe model file."),
+                           a(href="https://github.com/richacker/cooccurence/blob/master/review.txt"
                              ,"Sample data input file"),   
+                           br(),
+                           a(href="https://github.com/richacker/cooccurence/blob/master/english-ud-2.0-170801.udpipe"
+                             ,"Sample udpipe model file"),   
                            
                            br(),
                            
                            h4('How to use this App'),
                            
                            p('To use this app, click on', 
-                             span(strong("Upload data (csv file with header)")),
-                             'and uppload the csv data file. You can also change the number of clusters to fit in k-means clustering')),
+                             span(strong("Upload text file")),
+                             'and udpipe model file. You can also change the POS tags for different results')),
                   
                   tabPanel("Co-occurence Graph", 
                            plotOutput('plot'),
@@ -62,7 +65,7 @@ shinyUI(fluidPage(
                            plotOutput('wcloud', width = "100%")),
                   
                   tabPanel("Data",
-                           dataTableOutput('clust_data'))
+                           dataTableOutput('datatable'))
                   
       ) # end of tabsetPanel
     )# end of main panel
