@@ -1,11 +1,42 @@
+options(shiny.maxRequestSize=30*1024^2)
 shinyServer(function(input, output) {
-  
-  output$distPlot <- renderPlot({
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+ #output$txt <- renderText(readLines("./review.txt"))
+ 
+ output$plot <- renderPlot({
+   if(is.null(input$txtFile) || is.null(input$modelFile)){
+     return(NULL)
+   } else {
+     textData = readLines(file(input$txtFile$datapath), encoding = "UTF-8")
+     textData  =  str_replace_all(textData, "<.*?>", "") 
+     model = udpipe_load_model(input$modelFile$datapath)  
+     
+     x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
+     x <- as.data.frame(x)
+     chckVal <- input$checkbox
+     strsplit(chckVal, " ")
+     test <- subset(x, upos %in% strsplit(chckVal, " "))
+     print(test)
+     
+    print(chckVal)
+    print(c("NOUN", "ADJ"))
+    print(typeof(chckVal))
+    print(typeof(c("NOUN", "ADJ")))
+    print(gsub("  ", " ", chckVal))
     
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-  })
+     nokia_cooc <- cooccurrence(     # try `?cooccurrence` for parm options
+       x = subset(x, upos %in% chckVal), 
+       term = "lemma", 
+       group = c("doc_id", "paragraph_id", "sentence_id"))  # 0.02 secs
+     # str(nokia_cooc)
+     wordnetwork <- head(nokia_cooc, 50)
+     wordnetwork <- igraph::graph_from_data_frame(wordnetwork) # needs edgelist in first 2 colms.
+     
+     ggraph(wordnetwork, layout = "fr") +  
+       geom_edge_link(aes(width = cooc, edge_alpha = cooc), edge_colour = "orange") +  
+       geom_node_text(aes(label = name), col = "darkgreen", size = 4) +
+       theme_graph(base_family = "Arial Narrow") +  
+       theme(legend.position = "none") +
+       labs(title = "Cooccurrences within 3 words distance", subtitle = input$checkbox)
+   }
+ })
 })
