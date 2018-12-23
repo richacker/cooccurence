@@ -12,23 +12,18 @@ shinyServer(function(input, output) {
      
      x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
      x <- as.data.frame(x)
-     #chckVal <- input$checkbox
-     #strsplit(chckVal, " ")
-     #test <- subset(x, upos %in% strsplit(chckVal, " "))
-     #print(test)
      
-    #print(chckVal)
-    #print(c("NOUN", "ADJ"))
-    #print(typeof(chckVal))
-    #print(typeof(c("NOUN", "ADJ")))
+    print(input$checkbox)
+    print(c("NOUN", "ADJ"))
+    print(typeof(input$checkbox))
+    print(typeof(c("NOUN", "ADJ")))
     #print(gsub("  ", " ", chckVal))
     
-     nokia_cooc <- cooccurrence(     # try `?cooccurrence` for parm options
-       x = subset(x, upos %in% c("NOUN", "ADJ")), 
-       term = "lemma", 
-       group = c("doc_id", "paragraph_id", "sentence_id"))  # 0.02 secs
-     # str(nokia_cooc)
-     wordnetwork <- head(nokia_cooc, 50)
+     n_cooc <- cooccurrence(     #$ try `?cooccurrence` for parm options
+     x = subset(x, upos %in% c(input$checkbox)), 
+     term = "lemma", 
+     group = c("doc_id", "paragraph_id", "sentence_id"))  # 0.02 secs
+     wordnetwork <- head(n_cooc, 50)
      wordnetwork <- igraph::graph_from_data_frame(wordnetwork) # needs edgelist in first 2 colms.
      
      ggraph(wordnetwork, layout = "fr") +  
@@ -36,7 +31,7 @@ shinyServer(function(input, output) {
        geom_node_text(aes(label = name), col = "darkgreen", size = 4) +
        theme_graph(base_family = "Arial Narrow") +  
        theme(legend.position = "none") +
-       labs(title = "Cooccurrences within 3 words distance", subtitle = input$checkbox)
+       labs(title = "Cooccurrences within 3 words distance", subtitle = c(input$checkbox))
      
    }
  })
@@ -51,18 +46,15 @@ shinyServer(function(input, output) {
      
      x <- udpipe_annotate(model, x = textData) #%>% as.data.frame() %>% head()
      x <- as.data.frame(x)
-   all_nouns = x %>% subset(., upos %in% "NOUN"); all_nouns$token[1:20]
+     
+   all_words = x %>% subset(., upos %in% c(input$checkbox)); all_nouns$token[1:20]
    
-   top_nouns = txt_freq(all_nouns$lemma)
-   head(top_nouns$key, 20) 
-   
-   all_verbs = x %>% subset(., upos %in% "VERB") 
-   top_verbs = txt_freq(all_verbs$lemma)
-   head(top_verbs$key, 20)
+   all_words = txt_freq(all_words$lemma)
+   head(all_words$key, 20) 
    
    
-   wordcloud(words = top_nouns$key, 
-             freq = top_nouns$freq, 
+   wordcloud(words = all_words$key, 
+             freq = all_words$freq, 
              min.freq = 2, 
              max.words = 100,
              random.order = FALSE,

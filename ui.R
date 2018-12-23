@@ -24,8 +24,8 @@ shinyUI(fluidPage(
                 multiple = FALSE,
                 accept = c( ".udpipe")),
       checkboxGroupInput("checkbox", label = h3("Part-Of-Speech Tags"), 
-                         choices = list("Adjective" = "JJ", "Noun" = "NN", "Proper Noun" = "NNP", "Adverb" = "RB", "Verb" = "VB"),
-                         selected = list("Adjective" = "JJ", "Noun" = "NN", "Proper Noun" = "NNP"))
+                         choices = list("Adjective" = "ADJ", "Noun" = "NOUN", "Proper Noun" = "PROPN", "Adverb" = "ADV", "Verb" = "VERB"),
+                         selected = list("Adjective" = "ADJ", "Noun" = "NOUN", "Proper Noun" = "PROPN"))
       
     ),
     
@@ -39,9 +39,9 @@ shinyUI(fluidPage(
                            
                            h4(p("Data input")),
                            
-                           p("This app supports only comma separated values (.csv) data file. CSV data file should have headers and the first column of the file should have row names.", align="justify"),
+                           p("This app supports only text file (.txt) data file.", align="justify"),
                            
-                           p("Please refer to the link below for sample csv file."),
+                           p("Please refer to the link below for sample txt file."),
                            a(href="https://github.com/sudhir-voleti/sample-data-sets/blob/master/Segmentation%20Discriminant%20and%20targeting%20data/ConneCtorPDASegmentation.csv"
                              ,"Sample data input file"),   
                            
@@ -53,23 +53,15 @@ shinyUI(fluidPage(
                              span(strong("Upload data (csv file with header)")),
                              'and uppload the csv data file. You can also change the number of clusters to fit in k-means clustering')),
                   
-                  # second tab coming up:
                   tabPanel("Co-occurence Graph", 
-                           
-                           # plot1 object returned by server.R
                            plotOutput('plot'),
                            textOutput("txt")),
                           
                   
-                  # third tab coming up:
                   tabPanel("Word Cloud",
-                           
-                           # obj 'clust_summary' from server.R
                            plotOutput('wcloud', width = "100%")),
                   
-                  # fourth tab coming up:
                   tabPanel("Data",
-                           
                            dataTableOutput('clust_data'))
                   
       ) # end of tabsetPanel
